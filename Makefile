@@ -6,12 +6,12 @@
 #    By: rlabbiz <rlabbiz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:07:52 by rlabbiz           #+#    #+#              #
-#    Updated: 2023/04/20 21:29:31 by rlabbiz          ###   ########.fr        #
+#    Updated: 2023/04/24 16:14:51 by rlabbiz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror #-fsanitize=thread -g
 NAME		= philo
 DEFS		= philo.h
 MAIN_FILE	= philo.c

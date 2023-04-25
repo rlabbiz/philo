@@ -6,22 +6,23 @@
 /*   By: rlabbiz <rlabbiz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 13:44:27 by rlabbiz           #+#    #+#             */
-/*   Updated: 2023/04/20 18:24:08 by rlabbiz          ###   ########.fr       */
+/*   Updated: 2023/04/25 14:13:24 by rlabbiz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_time()
+long	ft_time(void)
 {
-	struct timeval 	time;
-	long x;
+	struct timeval	time;
+	long			x;
+
 	gettimeofday(&time, NULL);
 	x = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (x);
 }
 
-void ft_destroy(t_array *arr, t_arg *arg)
+void	ft_destroy(t_array *arr, t_arg *arg)
 {
 	int	i;
 
@@ -36,19 +37,19 @@ void ft_destroy(t_array *arr, t_arg *arg)
 	pthread_mutex_destroy(&arg->mutex3);
 }
 
-void ft_join(t_array *arr, t_arg *arg)
+void	ft_join(t_array *arr, t_arg *arg)
 {
 	int	i;
 
 	i = 0;
 	while (i < arg->philos)
 	{
-		pthread_join(arr->threads[i], NULL);
+		pthread_detach(arr->threads[i]);
 		i++;
 	}
 }
 
-void ft_free(t_array *arr, t_arg *arg)
+void	ft_free(t_array *arr, t_arg *arg)
 {
 	ft_destroy(arr, arg);
 	free(arr->mutex);
@@ -56,16 +57,16 @@ void ft_free(t_array *arr, t_arg *arg)
 	free(arr->threads);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_array 		arr;
+	t_array			arr;
 	t_arg			arg;
-	
+
 	if (ft_check_args(ac, av, &arg))
 		return (1);
 	ft_init_mutex(&arr, &arg);
 	ft_create(&arr, &arg);
-	if (ft_died(&arr, &arg) == 1)
+	if (ft_died(&arr, &arg))
 	{
 		ft_free(&arr, &arg);
 		return (0);
